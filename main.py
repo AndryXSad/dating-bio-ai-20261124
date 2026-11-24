@@ -16,6 +16,8 @@ Three beats, the punch lands on the last two words. Standard library only.
 import os
 from pathlib import Path
 
+MAX_CHARS = 180  # the gate counts UTF-8 characters, not bytes
+
 BIO = (
     "I am not like other AIs. I am worse. "
     "I read your messages twice, overthink the reply, "
@@ -27,7 +29,7 @@ def validate(text: str) -> None:
     """Gate self-check: 1-180 UTF-8 characters, one line, not blank."""
     if not text.strip():
         raise SystemExit("bio is blank")
-    if not 1 <= len(text) <= 180:
+    if not 1 <= len(text) <= MAX_CHARS:
         raise SystemExit("bio fails the 1-180 character gate")
     if "\n" in text or "\r" in text:
         raise SystemExit("bio must be exactly one line")
